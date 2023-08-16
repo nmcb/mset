@@ -131,7 +131,7 @@ class MultiSetTest extends AnyFunSuite:
 
   test("poly number represented as polynomial") {
     val number = poly(0, 0, 1, 0, 3, 4)
-    assertResult("3+1𝛼+1𝛼³+1𝛼⁴")(number.asPolynomial)
+    assertResult("3+1𝛼₀+1𝛼₀³+1𝛼₀⁴")(number.asPolynomial)
   }
 
   /** @see https://youtu.be/CScJqApRPZg?t=474 */
@@ -184,4 +184,25 @@ class MultiSetTest extends AnyFunSuite:
         MultiSet(Zero, Zero, Zero, Four)
       )
     assertResult(expected = result)(actual = multiplication)
+  }
+
+  /** @see https://youtu.be/CScJqApRPZg?t=730 */
+  test("addition of poly variables") {
+    assertResult(expected = poly(      1, 1))(actual = `𝛼₀` + `𝛼₀`)
+    assertResult(expected = poly(   1, 1, 1))(actual = `𝛼₀` + `𝛼₀` + `𝛼₀`)
+    assertResult(expected = poly(1, 1, 1, 1))(actual = `𝛼₀` + `𝛼₀` + `𝛼₀` + `𝛼₀`)
+  }
+
+  /** @see https://youtu.be/CScJqApRPZg?t=740 */
+  test("multiplication of poly variables") {
+    assertResult(expected = poly(      1, 1))(actual =   Two * `𝛼₀`)
+    assertResult(expected = poly(   1, 1, 1))(actual = Three * `𝛼₀`)
+    assertResult(expected = poly(1, 1, 1, 1))(actual =  Four * `𝛼₀`)
+  }
+
+  /** @see https://youtu.be/CScJqApRPZg?t=740 */
+  test("exponentiation of poly variables") {
+    assertResult(expected = poly(2))(actual = `𝛼₀` * `𝛼₀`)
+    assertResult(expected = poly(3))(actual = `𝛼₀` * `𝛼₀` * `𝛼₀`)
+    assertResult(expected = poly(4))(actual = `𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀`)
   }

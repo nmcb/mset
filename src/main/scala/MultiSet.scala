@@ -37,7 +37,7 @@ case class MultiSet(elements: IndexedSeq[MultiSet]):
 
     def term(i: Int): Option[String] =
       products.get(i).map(p =>
-        val v = if i != 0 then s"𝛼" else ""
+        val v = if i != 0 then s"𝛼${toSubScriptString(0)}" else ""
         val e = if i >= 2 then toSuperScriptString(i) else ""
         s"$p$v$e"
       )
@@ -61,27 +61,28 @@ object MultiSet extends App:
   def empty: MultiSet =
     MultiSet(IndexedSeq.empty[MultiSet])
 
-  val  Zero : MultiSet = empty
-  val   One : MultiSet = MultiSet(Zero)
-  val   Two : MultiSet = MultiSet(Zero, Zero)
-  val Three : MultiSet = MultiSet(Zero, Zero, Zero)
-  val  Four : MultiSet = MultiSet(Zero, Zero, Zero, Zero)
-  val  Five : MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero)
-  val   Six : MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero)
-  val Seven : MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero, Zero)
-  val Eight : MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero)
-  val  Nine : MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero)
-  val   Ten : MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero)
-
-
   def apply(elements: MultiSet*): MultiSet =
     MultiSet(elements.toIndexedSeq)
 
   def apply(i: Int): Nat=
     fromInt(i)
 
+  val Zero: MultiSet = empty
+  val One: MultiSet = MultiSet(Zero)
+  val Two: MultiSet = MultiSet(Zero, Zero)
+  val Three: MultiSet = MultiSet(Zero, Zero, Zero)
+  val Four: MultiSet = MultiSet(Zero, Zero, Zero, Zero)
+  val Five: MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero)
+  val Six: MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero)
+  val Seven: MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero, Zero)
+  val Eight: MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero)
+  val Nine: MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero)
+  val Ten: MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero)
+
   def poly(naturals: Int*): Poly =
     MultiSet(naturals.map(fromInt).toIndexedSeq)
+
+  val `𝛼₀` : Poly = poly(1)
 
   def fromInt(i: Int): Nat =
     assert(i >= 0, "must be a natural number")
