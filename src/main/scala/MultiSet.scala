@@ -1,7 +1,6 @@
 package fpa
 package data
 
-
 case class MultiSet(elements: IndexedSeq[MultiSet]):
 
   import MultiSet.*
@@ -13,7 +12,7 @@ case class MultiSet(elements: IndexedSeq[MultiSet]):
     MultiSet(for { a <- this.elements ; b <- that.elements } yield a + b)
 
   def isZero: Boolean =
-    this == zero
+    this == Zero
 
   def isNat: Boolean =
     elements.forall(_.isZero)
@@ -27,10 +26,10 @@ case class MultiSet(elements: IndexedSeq[MultiSet]):
   def toInt: Int =
     if isNat then elements.size else sys.error("not a natural number")
 
-  def asNatString: String =
+  def asNatural: String =
     toInt.toString
 
-  def asPolyString: String =
+  def asPolynomial: String =
     assert(isPoly, "not a poly number")
 
     val products: Map[Int, Int] =
@@ -39,24 +38,41 @@ case class MultiSet(elements: IndexedSeq[MultiSet]):
     def term(i: Int): Option[String] =
       products.get(i).map(p =>
         val v = if i != 0 then s"𝛼" else ""
-        val e = if i >= 2 then asSuperScriptString(i) else ""
+        val e = if i >= 2 then toSuperScriptString(i) else ""
         s"$p$v$e"
       )
 
-    List.tabulate(products.keys.max + 1)(term).flatten.mkString(" + ")
+    List.tabulate(products.keys.max + 1)(term).flatten.mkString("+")
 
-  def asMultiSetString: String =
+  def asMultiSet: String =
     elements.map(_.toString).mkString("[", " ", "]")
 
   override def toString: String =
-    if      isNat  then asNatString
-    else if isPoly then asPolyString
-    else                asMultiSetString
+    if      isNat  then asNatural
+    else if isPoly then asPolynomial
+    else                asMultiSet
 
-type Nat  = MultiSet
-type Poly = MultiSet // in reality a MultiSet[Nat]
+type Nat   = MultiSet // in reality a MultiSet[Zero]
+type Poly  = MultiSet // in reality a MultiSet[Nat]
+type Multi = MultiSet // in reality a MultiSet[Poly]
 
 object MultiSet extends App:
+
+  def empty: MultiSet =
+    MultiSet(IndexedSeq.empty[MultiSet])
+
+  val  Zero : MultiSet = empty
+  val   One : MultiSet = MultiSet(Zero)
+  val   Two : MultiSet = MultiSet(Zero, Zero)
+  val Three : MultiSet = MultiSet(Zero, Zero, Zero)
+  val  Four : MultiSet = MultiSet(Zero, Zero, Zero, Zero)
+  val  Five : MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero)
+  val   Six : MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero)
+  val Seven : MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero, Zero)
+  val Eight : MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero)
+  val  Nine : MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero)
+  val   Ten : MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero)
+
 
   def apply(elements: MultiSet*): MultiSet =
     MultiSet(elements.toIndexedSeq)
@@ -64,20 +80,14 @@ object MultiSet extends App:
   def apply(i: Int): Nat=
     fromInt(i)
 
-  def empty: MultiSet =
-    MultiSet(IndexedSeq.empty[MultiSet])
-
-  def zero: Nat =
-    empty
-
   def poly(naturals: Int*): Poly =
     MultiSet(naturals.map(fromInt).toIndexedSeq)
 
   def fromInt(i: Int): Nat =
     assert(i >= 0, "must be a natural number")
-    MultiSet(IndexedSeq.fill(i)(zero))
+    MultiSet(IndexedSeq.fill(i)(Zero))
 
-  extension (i: Int) def asSubScriptString: String =
+  extension (i: Int) def toSubScriptString: String =
     def loop(todo: List[Char], acc: String = ""): String =
       todo match
         case '0' :: rest => loop(rest, acc + '\u2080')
@@ -95,7 +105,7 @@ object MultiSet extends App:
         case           _ => sys.error("not a decimal")
     loop(i.toString.toList)
 
-  extension (i: Int) def asSuperScriptString: String =
+  extension (i: Int) def toSuperScriptString: String =
     def loop(todo: List[Char], acc: String = ""): String =
       todo match
         case '0' :: rest => loop(rest, acc + '\u2070')
@@ -113,3 +123,9 @@ object MultiSet extends App:
         case _ => sys.error("not a decimal")
 
     loop(i.toString.toList)
+
+
+  // playground
+
+  val addZero = MultiSet(fromInt(2), fromInt(1), fromInt(0))
+  println(addZero)
