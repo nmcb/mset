@@ -208,7 +208,7 @@ class MultiSetTest extends AnyFunSuite:
   }
 
   /** @see https://youtu.be/CScJqApRPZg?t=740 */
-  test("poly variable relations") {
+  test("poly variable indexing") {
     assertResult(expected = MultiSet(MultiSet(Zero)))(actual = `𝛼₀`)
     assertResult(expected = MultiSet(MultiSet(MultiSet(Zero))))(actual = `𝛼₁`)
     assertResult(expected = MultiSet(MultiSet(MultiSet(MultiSet(Zero)))))(actual = `𝛼₂`)
