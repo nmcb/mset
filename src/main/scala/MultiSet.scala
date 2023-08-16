@@ -32,21 +32,18 @@ case class MultiSet[A](elements: IndexedSeq[MultiSet[A]]):
 
   def asPolyString: String =
     assert(isPoly, "not a poly number")
-    val productByIdx: Map[Int, Int] =
-      elements
-        .map(_.toInt)
-        .sorted
-        .groupMap(identity)(identity)
-        .map((p,ps) => (p,ps.size))
-        .withDefaultValue(0)
+
+    val products: Map[Int, Int] =
+      elements.groupBy(identity).map((p,ps) => p.toInt -> ps.size)
 
     def term(i: Int): Option[String] =
-      val product  = if productByIdx(i) != 0 then s"${productByIdx(i)}" else ""
-      val variable = if productByIdx(i) != 0 && i != 0 then s"𝛼" else ""
-      val exponent = if productByIdx(i) != 0 && i >= 2 then asSuperScriptString(i) else ""
-      if productByIdx(i) != 0 then Some(product + variable + exponent) else None
+      products.get(i).map(p =>
+        val v = if i != 0 then s"𝛼" else ""
+        val e = if i >= 2 then asSuperScriptString(i) else ""
+        s"$p$v$e"
+      )
 
-    List.tabulate(productByIdx.keys.max + 1)(term).flatten.mkString(" + ")
+    List.tabulate(products.keys.max + 1)(term).flatten.mkString(" + ")
 
   def asMultiSetString: String =
     elements.map(_.toString).mkString("[", " ", "]")
@@ -116,5 +113,3 @@ object MultiSet extends App:
         case _ => sys.error("not a decimal")
 
     loop(i.toString.toList)
-
-  print(poly(0, 0, 1, 3, 0, 4).toString)

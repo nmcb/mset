@@ -128,3 +128,8 @@ class MultiSetTest extends AnyFunSuite:
     val result         = MultiSet(poly(0, 0, 2, 1, 1), poly(0, 0, 2, 0, 0), poly(0, 0, 2, 9), poly(3, 8, 1, 1), poly(3, 8, 0, 0), poly(3, 8, 9))
     assertResult(expected = result)(actual = multiplication)
   }
+
+  test("poly number represented as polynomial") {
+    val number = poly(0, 0, 1, 0, 3, 4)
+    assertResult("3 + 1𝛼 + 1𝛼³ + 1𝛼⁴")(number.asPolyString)
+  }
