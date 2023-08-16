@@ -200,17 +200,24 @@ class MultiSetTest extends AnyFunSuite:
     assertResult(expected = poly(1, 1, 1, 1))(actual =  Four * `𝛼₀`)
   }
 
-  /** @see https://youtu.be/CScJqApRPZg?t=740 */
+  /** @see https://youtu.be/CScJqApRPZg?t=750 */
   test("exponentiation of poly variables") {
     assertResult(expected = poly(2))(actual = `𝛼₀` * `𝛼₀`)
     assertResult(expected = poly(3))(actual = `𝛼₀` * `𝛼₀` * `𝛼₀`)
     assertResult(expected = poly(4))(actual = `𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀`)
   }
 
-  /** @see https://youtu.be/CScJqApRPZg?t=740 */
+  /** @see https://youtu.be/CScJqApRPZg?t=760 */
   test("poly variable indexing") {
     assertResult(expected = MultiSet(MultiSet(Zero)))(actual = `𝛼₀`)
-    assertResult(expected = MultiSet(MultiSet(MultiSet(Zero))))(actual = `𝛼₁`)
-    assertResult(expected = MultiSet(MultiSet(MultiSet(MultiSet(Zero)))))(actual = `𝛼₂`)
+    assertResult(expected = MultiSet(MultiSet( One)))(actual = `𝛼₁`)
+    assertResult(expected = MultiSet(MultiSet( Two)))(actual = `𝛼₂`)
   }
 
+  /** @see https://youtu.be/CScJqApRPZg?t=770 */
+  test("poly variable multiplication") {
+    assertResult(expected = MultiSet(poly(1), poly(1)))(actual = Two * `𝛼₁`)
+    assertResult(expected = MultiSet(poly(1), poly(1), poly(1)))(actual = Three * `𝛼₁`)
+    assertResult(expected = MultiSet(poly(2), poly(2)))(actual = Two * `𝛼₂`)
+    assertResult(expected = MultiSet(poly(2), poly(2), poly(2)))(actual = Three * `𝛼₂`)
+  }

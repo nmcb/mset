@@ -49,7 +49,7 @@ case class MultiSet(elements: IndexedSeq[MultiSet]):
 
   override def toString: String =
     if      isNat  then asNatural
-    else if isPoly then asPolynomial
+//    else if isPoly then asPolynomial
     else                asMultiSet
 
 type Nat   = MultiSet // in reality a MultiSet[Zero]
@@ -79,20 +79,21 @@ object MultiSet extends App:
   val  Nine : MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero)
   val   Ten : MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero)
 
-  def poly(naturals: Int*): Poly =
-    MultiSet(naturals.map(fromInt).toIndexedSeq)
+  def poly(ints: Int*): Poly =
+    MultiSet(ints.map(fromInt).toIndexedSeq)
 
   val `𝛼₀`  : Poly = poly(1)
   val `𝛼₁`  : Poly = MultiSet(`𝛼₀`)
-  val `𝛼₂`  : Poly = MultiSet(`𝛼₁`)
-  val `𝛼₃`  : Poly = MultiSet(`𝛼₂`)
-  val `𝛼₄`  : Poly = MultiSet(`𝛼₃`)
-  val `𝛼₅`  : Poly = MultiSet(`𝛼₄`)
-  val `𝛼₆`  : Poly = MultiSet(`𝛼₅`)
-  val `𝛼₇`  : Poly = MultiSet(`𝛼₆`)
-  val `𝛼₈`  : Poly = MultiSet(`𝛼₇`)
-  val `𝛼₉`  : Poly = MultiSet(`𝛼₈`)
-  val `𝛼₁₀` : Poly = MultiSet(`𝛼₉`)
+  val `𝛼₂`  : Poly = MultiSet(`𝛼₀` * `𝛼₀`)
+  val `𝛼₃`  : Poly = MultiSet(`𝛼₀` * `𝛼₀` * `𝛼₀`)
+  val `𝛼₄`  : Poly = MultiSet(`𝛼₀` * `𝛼₀` * `𝛼₀`)
+  val `𝛼₅`  : Poly = MultiSet(`𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀`)
+  val `𝛼₆`  : Poly = MultiSet(`𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀`)
+  val `𝛼₇`  : Poly = MultiSet(`𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀`)
+  val `𝛼₈`  : Poly = MultiSet(`𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀`)
+  val `𝛼₉`  : Poly = MultiSet(`𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀`)
+  val `𝛼₁₀` : Poly = MultiSet(`𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀`)
+
   def fromInt(i: Int): Nat =
     assert(i >= 0, "must be a natural number")
     MultiSet(IndexedSeq.fill(i)(Zero))
