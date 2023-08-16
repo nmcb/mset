@@ -67,23 +67,32 @@ object MultiSet extends App:
   def apply(i: Int): Nat=
     fromInt(i)
 
-  val Zero: MultiSet = empty
-  val One: MultiSet = MultiSet(Zero)
-  val Two: MultiSet = MultiSet(Zero, Zero)
-  val Three: MultiSet = MultiSet(Zero, Zero, Zero)
-  val Four: MultiSet = MultiSet(Zero, Zero, Zero, Zero)
-  val Five: MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero)
-  val Six: MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero)
-  val Seven: MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero, Zero)
-  val Eight: MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero)
-  val Nine: MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero)
-  val Ten: MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero)
+  val  Zero : MultiSet = empty
+  val   One : MultiSet = MultiSet(Zero)
+  val   Two : MultiSet = MultiSet(Zero, Zero)
+  val Three : MultiSet = MultiSet(Zero, Zero, Zero)
+  val  Four : MultiSet = MultiSet(Zero, Zero, Zero, Zero)
+  val  Five : MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero)
+  val   Six : MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero)
+  val Seven : MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero, Zero)
+  val Eight : MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero)
+  val  Nine : MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero)
+  val   Ten : MultiSet = MultiSet(Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero)
 
   def poly(naturals: Int*): Poly =
     MultiSet(naturals.map(fromInt).toIndexedSeq)
 
-  val `𝛼₀` : Poly = poly(1)
-
+  val  `𝛼₀` : Poly = poly(1)
+  val  `𝛼₁` : Poly = MultiSet(`𝛼₀`)
+  val  `𝛼₂` : Poly = MultiSet(`𝛼₁`)
+  val  `𝛼₃` : Poly = MultiSet(`𝛼₂`)
+  val  `𝛼₄` : Poly = MultiSet(`𝛼₃`)
+  val  `𝛼₅` : Poly = MultiSet(`𝛼₄`)
+  val  `𝛼₆` : Poly = MultiSet(`𝛼₅`)
+  val  `𝛼₇` : Poly = MultiSet(`𝛼₆`)
+  val  `𝛼₈` : Poly = MultiSet(`𝛼₇`)
+  val  `𝛼₉` : Poly = MultiSet(`𝛼₈`)
+  val `𝛼₁₀` : Poly = MultiSet(`𝛼₉`)
   def fromInt(i: Int): Nat =
     assert(i >= 0, "must be a natural number")
     MultiSet(IndexedSeq.fill(i)(Zero))
@@ -124,9 +133,3 @@ object MultiSet extends App:
         case _ => sys.error("not a decimal")
 
     loop(i.toString.toList)
-
-
-  // playground
-
-  val addZero = MultiSet(fromInt(2), fromInt(1), fromInt(0))
-  println(addZero)

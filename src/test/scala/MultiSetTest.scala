@@ -188,15 +188,15 @@ class MultiSetTest extends AnyFunSuite:
 
   /** @see https://youtu.be/CScJqApRPZg?t=730 */
   test("addition of poly variables") {
-    assertResult(expected = poly(      1, 1))(actual = `𝛼₀` + `𝛼₀`)
-    assertResult(expected = poly(   1, 1, 1))(actual = `𝛼₀` + `𝛼₀` + `𝛼₀`)
+    assertResult(expected = poly(1, 1))(actual = `𝛼₀` + `𝛼₀`)
+    assertResult(expected = poly(1, 1, 1))(actual = `𝛼₀` + `𝛼₀` + `𝛼₀`)
     assertResult(expected = poly(1, 1, 1, 1))(actual = `𝛼₀` + `𝛼₀` + `𝛼₀` + `𝛼₀`)
   }
 
   /** @see https://youtu.be/CScJqApRPZg?t=740 */
   test("multiplication of poly variables") {
-    assertResult(expected = poly(      1, 1))(actual =   Two * `𝛼₀`)
-    assertResult(expected = poly(   1, 1, 1))(actual = Three * `𝛼₀`)
+    assertResult(expected = poly(1, 1))(actual =   Two * `𝛼₀`)
+    assertResult(expected = poly(1, 1, 1))(actual = Three * `𝛼₀`)
     assertResult(expected = poly(1, 1, 1, 1))(actual =  Four * `𝛼₀`)
   }
 
@@ -206,3 +206,11 @@ class MultiSetTest extends AnyFunSuite:
     assertResult(expected = poly(3))(actual = `𝛼₀` * `𝛼₀` * `𝛼₀`)
     assertResult(expected = poly(4))(actual = `𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀`)
   }
+
+  /** @see https://youtu.be/CScJqApRPZg?t=740 */
+  test("poly variable relations") {
+    assertResult(expected = MultiSet(MultiSet(Zero)))(actual = `𝛼₀`)
+    assertResult(expected = MultiSet(MultiSet(MultiSet(Zero))))(actual = `𝛼₁`)
+    assertResult(expected = MultiSet(MultiSet(MultiSet(MultiSet(Zero)))))(actual = `𝛼₂`)
+  }
+
