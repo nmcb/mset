@@ -2,14 +2,14 @@ package fpa
 package data
 
 
-case class MultiSet[A](elements: IndexedSeq[MultiSet[A]]):
+case class MultiSet(elements: IndexedSeq[MultiSet]):
 
   import MultiSet.*
 
-  def +(that: MultiSet[A]): MultiSet[A] =
+  def +(that: MultiSet): MultiSet =
     MultiSet(this.elements ++ that.elements)
 
-  def *(that: MultiSet[A]): MultiSet[A] =
+  def *(that: MultiSet): MultiSet =
     MultiSet(for { a <- this.elements ; b <- that.elements } yield a + b)
 
   def isZero: Boolean =
@@ -53,19 +53,19 @@ case class MultiSet[A](elements: IndexedSeq[MultiSet[A]]):
     else if isPoly then asPolyString
     else                asMultiSetString
 
-type Nat  = MultiSet[Unit]
-type Poly = MultiSet[Unit] // in reality a MultiSet[Nat]
+type Nat  = MultiSet
+type Poly = MultiSet // in reality a MultiSet[Nat]
 
 object MultiSet extends App:
 
-  def apply[A](elements: MultiSet[A]*): MultiSet[A] =
+  def apply(elements: MultiSet*): MultiSet =
     MultiSet(elements.toIndexedSeq)
 
   def apply(i: Int): Nat=
     fromInt(i)
 
-  def empty: MultiSet[Unit] =
-    MultiSet(IndexedSeq.empty[MultiSet[Unit]])
+  def empty: MultiSet =
+    MultiSet(IndexedSeq.empty[MultiSet])
 
   def zero: Nat =
     empty
@@ -75,7 +75,7 @@ object MultiSet extends App:
 
   def fromInt(i: Int): Nat =
     assert(i >= 0, "must be a natural number")
-    MultiSet[Unit](IndexedSeq.fill(i)(zero))
+    MultiSet(IndexedSeq.fill(i)(zero))
 
   extension (i: Int) def asSubScriptString: String =
     def loop(todo: List[Char], acc: String = ""): String =
