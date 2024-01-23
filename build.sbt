@@ -1,7 +1,7 @@
 lazy val mset =
   project
     .in(file("."))
-    .settings( scalaVersion := "3.3.0"
+    .settings( scalaVersion := "3.3.1"
              , name         := "fpa-mset"
              , version      := "0.1.0"
              , libraryDependencies ++= Seq(
