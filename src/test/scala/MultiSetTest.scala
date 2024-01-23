@@ -16,25 +16,25 @@ class MultiSetTest extends AnyFunSuite:
   test("Zero constructor") {
     assertResult(expected = empty)(actual = Zero)
     assert(Zero.isZero)
-    assert(Zero.isNat)
+    assert(Zero.isNatural)
     assert(Zero.isPoly)
   }
 
   test( "natural number constructors") {
     val nat0 = Zero
-    assert(nat0.isNat)
+    assert(nat0.isNatural)
     assert(nat0.isPoly)
 
     val nat1 = MultiSet(Zero)
-    assert(nat1.isNat)
+    assert(nat1.isNatural)
     assert(nat1.isPoly)
 
     val nat2 = MultiSet(Zero, Zero)
-    assert(nat2.isNat)
+    assert(nat2.isNatural)
     assert(nat2.isPoly)
 
     val nat3 = MultiSet(Zero, Zero, Zero)
-    assert(nat3.isNat)
+    assert(nat3.isNatural)
     assert(nat3.isPoly)
 
     assertResult(expected = nat0)(actual = fromInt(0))
@@ -48,10 +48,10 @@ class MultiSetTest extends AnyFunSuite:
     assertResult(expected = fromInt(3))(actual = fromInt(2) + fromInt(1))
     assertResult(expected = fromInt(3))(actual = fromInt(1) + fromInt(2))
     assertResult(expected = fromInt(3))(actual = fromInt(0) + fromInt(3))
-    assert((fromInt(3) + fromInt(0)).isNat)
-    assert((fromInt(2) + fromInt(1)).isNat)
-    assert((fromInt(1) + fromInt(2)).isNat)
-    assert((fromInt(0) + fromInt(3)).isNat)
+    assert((fromInt(3) + fromInt(0)).isNatural)
+    assert((fromInt(2) + fromInt(1)).isNatural)
+    assert((fromInt(1) + fromInt(2)).isNatural)
+    assert((fromInt(0) + fromInt(3)).isNatural)
   }
 
   test("natural number under addition is associative") {
@@ -210,8 +210,8 @@ class MultiSetTest extends AnyFunSuite:
   /** @see https://youtu.be/CScJqApRPZg?t=760 */
   test("poly variable indexing") {
     assertResult(expected = MultiSet(MultiSet(Zero)))(actual = `𝛼₀`)
-    assertResult(expected = MultiSet(MultiSet( One)))(actual = `𝛼₁`)
-    assertResult(expected = MultiSet(MultiSet( Two)))(actual = `𝛼₂`)
+    assertResult(expected = MultiSet(MultiSet(One )))(actual = `𝛼₁`)
+    assertResult(expected = MultiSet(MultiSet(Two )))(actual = `𝛼₂`)
   }
 
   /** @see https://youtu.be/CScJqApRPZg?t=770 */
