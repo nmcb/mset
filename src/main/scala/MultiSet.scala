@@ -14,17 +14,17 @@ case class MultiSet(elements: IndexedSeq[MultiSet]):
   def isZero: Boolean =
     this == Zero
 
-  def isNat: Boolean =
+  def isNatural: Boolean =
     elements.forall(_.isZero)
 
   def isPoly: Boolean =
-    elements.forall(_.isNat)
+    elements.forall(_.isNatural)
 
   def isMulti: Boolean =
     elements.forall(_.isPoly)
 
   def toInt: Int =
-    if isNat then elements.size else sys.error("not a natural number")
+    if isNatural then elements.size else sys.error("not a natural number")
 
   def asNatural: String =
     toInt.toString
@@ -33,13 +33,13 @@ case class MultiSet(elements: IndexedSeq[MultiSet]):
     assert(isPoly, "not a poly number")
 
     val products: Map[Int, Int] =
-      elements.groupBy(identity).map((p,ps) => p.toInt -> ps.size)
+      elements.groupBy(identity).map(_.toInt -> _.size)
 
-    def term(i: Int): Option[String] =
-      products.get(i).map(p =>
-        val v = if i != 0 then s"𝛼${toSubScriptString(0)}" else ""
-        val e = if i >= 2 then toSuperScriptString(i) else ""
-        s"$p$v$e"
+    def term(index: Int): Option[String] =
+      products.get(index).map(product =>
+        val variable = if index != 0 then "𝛼₀" else ""
+        val exponent = if index >= 2 then index.toSuperScriptString else ""
+        s"$product$variable$exponent"
       )
 
     List.tabulate(products.keys.max + 1)(term).flatten.mkString("+")
@@ -48,9 +48,9 @@ case class MultiSet(elements: IndexedSeq[MultiSet]):
     elements.map(_.toString).mkString("[", " ", "]")
 
   override def toString: String =
-    if      isNat  then asNatural
-//    else if isPoly then asPolynomial
-    else                asMultiSet
+    if      isNatural then asNatural
+    else if isPoly    then asPolynomial
+    else                   asMultiSet
 
 type Nat   = MultiSet // in reality a MultiSet[Zero]
 type Poly  = MultiSet // in reality a MultiSet[Nat]
@@ -114,6 +114,7 @@ object MultiSet extends App:
         case '-' :: rest => loop(rest, acc + '\u208B')
         case         Nil => acc
         case           _ => sys.error("not a decimal")
+
     loop(i.toString.toList)
 
   extension (i: Int) def toSuperScriptString: String =
@@ -130,7 +131,7 @@ object MultiSet extends App:
         case '8' :: rest => loop(rest, acc + '\u2078')
         case '9' :: rest => loop(rest, acc + '\u2079')
         case '-' :: rest => loop(rest, acc + '\u208B')
-        case Nil => acc
-        case _ => sys.error("not a decimal")
+        case         Nil => acc
+        case           _ => sys.error("not a decimal")
 
     loop(i.toString.toList)
