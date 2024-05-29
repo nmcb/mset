@@ -4,7 +4,7 @@ lazy val mset =
     .settings( scalaVersion := "3.4.2"
              , name         := "fpa-mset"
              , version      := "0.1.0"
-             , libraryDependencies ++= Seq( "org.typelevel"  %% "cats-core"   % "2.10.0"
+             , libraryDependencies ++= Seq( "org.typelevel"  %% "cats-core"   % "2.12.0"
                                           , "org.typelevel"  %% "cats-effect" % "3.5.4"
                                           , "org.scalacheck" %% "scalacheck"  % "1.18.0"
                                           , "org.typelevel"  %% "squants"     % "1.8.3"
