@@ -6,7 +6,7 @@ lazy val mset =
              , version      := "0.1.0"
              , libraryDependencies ++= Seq( "org.typelevel"  %% "cats-core"   % "2.12.0"
                                           , "org.typelevel"  %% "cats-effect" % "3.5.4"
-                                          , "org.scalacheck" %% "scalacheck"  % "1.18.0"
+                                          , "org.scalacheck" %% "scalacheck"  % "1.18.1"
                                           , "org.typelevel"  %% "squants"     % "1.8.3"
                                           , "org.scalatest"  %% "scalatest"   % "3.2.19" % "test" )
              )
