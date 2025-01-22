@@ -1,10 +1,10 @@
 lazy val mset =
   project
     .in(file("."))
-    .settings( scalaVersion := "3.6.2"
+    .settings( scalaVersion := "3.6.3"
              , name         := "fpa-mset"
              , version      := "0.1.0"
-             , libraryDependencies ++= Seq( "org.typelevel"  %% "cats-core"   % "2.12.0"
+             , libraryDependencies ++= Seq( "org.typelevel"  %% "cats-core"   % "2.13.0"
                                           , "org.typelevel"  %% "cats-effect" % "3.5.7"
                                           , "org.scalacheck" %% "scalacheck"  % "1.18.1"
                                           , "org.typelevel"  %% "squants"     % "1.8.3"
