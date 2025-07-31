@@ -56,7 +56,7 @@ type Nat   = MultiSet // in reality a MultiSet[Zero]
 type Poly  = MultiSet // in reality a MultiSet[Nat]
 type Multi = MultiSet // in reality a MultiSet[Poly]
 
-object MultiSet extends App:
+object MultiSet:
 
   def empty: MultiSet =
     MultiSet(IndexedSeq.empty[MultiSet])
@@ -64,7 +64,7 @@ object MultiSet extends App:
   def apply(elements: MultiSet*): MultiSet =
     MultiSet(elements.toIndexedSeq)
 
-  def apply(i: Int): Nat=
+  def apply(i: Int): Nat =
     fromInt(i)
 
   val  Zero : MultiSet = empty
