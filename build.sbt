@@ -8,7 +8,7 @@ lazy val mset =
                                           , "org.typelevel"  %% "cats-effect" % "3.7.0"
                                           , "org.scalacheck" %% "scalacheck"  % "1.19.0"
                                           , "org.typelevel"  %% "squants"     % "1.8.3"
-                                          , "org.scalatest"  %% "scalatest"   % "3.2.19" % "test" )
+                                          , "org.scalatest"  %% "scalatest"   % "3.2.20" % "test" )
              )
 
 scalacOptions ++= Seq( "-encoding", "utf8"
