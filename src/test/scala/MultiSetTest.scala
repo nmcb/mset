@@ -9,7 +9,7 @@ class MultiSetTest extends AnyFunSuite:
 
   import MultiSet.*
 
-  test("empty constructor") {
+  test("Empty constructor") {
     assertResult(MultiSet(IndexedSeq.empty))(actual = empty)
   }
 
@@ -20,7 +20,7 @@ class MultiSetTest extends AnyFunSuite:
     assert(Zero.isPoly)
   }
 
-  test( "natural number constructors") {
+  test( "Natural number constructors") {
     val nat0 = Zero
     assert(nat0.isNatural)
     assert(nat0.isPoly)
@@ -43,7 +43,7 @@ class MultiSetTest extends AnyFunSuite:
     assertResult(expected = nat3)(actual = fromInt(3))
   }
 
-  test("natural numbers are closed under addition") {
+  test("Natural numbers are closed under addition") {
     assertResult(expected = fromInt(3))(actual = fromInt(3) + fromInt(0))
     assertResult(expected = fromInt(3))(actual = fromInt(2) + fromInt(1))
     assertResult(expected = fromInt(3))(actual = fromInt(1) + fromInt(2))
@@ -54,14 +54,14 @@ class MultiSetTest extends AnyFunSuite:
     assert((fromInt(0) + fromInt(3)).isNatural)
   }
 
-  test("natural number under addition is associative") {
+  test("Natural number under addition is associative") {
     assertResult(expected = fromInt(3) + (fromInt(0) + fromInt(3)))(actual = (fromInt(3) + fromInt(0)) + fromInt(3))
     assertResult(expected = fromInt(2) + (fromInt(1) + fromInt(3)))(actual = (fromInt(2) + fromInt(1)) + fromInt(3))
     assertResult(expected = fromInt(1) + (fromInt(2) + fromInt(3)))(actual = (fromInt(1) + fromInt(2)) + fromInt(3))
     assertResult(expected = fromInt(0) + (fromInt(3) + fromInt(3)))(actual = (fromInt(0) + fromInt(3)) + fromInt(3))
   }
 
-  test("poly number constructors") {
+  test("Poly number constructors") {
     val poly0 = poly(1, 1, 2)
     assert(poly0.isPoly)
 
@@ -80,14 +80,14 @@ class MultiSetTest extends AnyFunSuite:
     assertResult(expected = poly3)(actual = MultiSet.empty)
   }
 
-  test("poly numbers are closed under addition") {
+  test("Poly numbers are closed under addition") {
     val addition = poly(3, 3, 4) + empty + poly(0) + poly(3, 7)
     val result   = poly(3, 3, 4, 0, 3, 7)
     assertResult(expected = result)(actual = addition)
     assert(addition.isPoly)
   }
 
-  test("multi number constructor") {
+  test("Multi number constructor") {
     val multi0 = MultiSet(poly(1, 1), poly(1, 1))
     assert(multi0.isMulti)
 
@@ -106,36 +106,36 @@ class MultiSetTest extends AnyFunSuite:
     assertResult(expected = multi3)(actual = MultiSet())
   }
 
-  test("multi numbers are closed under addition") {
+  test("Multi numbers are closed under addition") {
     val addition = MultiSet(poly(2), poly(1, 3, 3)) + MultiSet(poly(0), poly(0), poly(5, 7))
     val result   = MultiSet(poly(2), poly(1, 3, 3), poly(0), poly(0), poly(5, 7))
     assertResult(expected = result)(actual = addition)
     assert(addition.isMulti)
   }
 
-  test("multi number multiplication on natural numbers") {
+  test("Multi number multiplication on natural numbers") {
     assertResult(expected = Zero)(actual = Zero * Zero)
     assertResult(expected = fromInt(6))(actual = fromInt(2) * fromInt(3))
   }
 
-  test("multi number multiplication on poly numbers") {
+  test("Multi number multiplication on poly numbers") {
     assertResult(expected = poly(3, 3, 2, 4, 4, 3))(actual = poly(2, 3) * poly(1, 1, 0))
     assertResult(expected = poly(3, 8, 6, 11, 6, 11, 9, 14))(actual = poly(0, 3) * poly(1, 4) * poly(2, 7))
   }
 
-  test("multi number multiplication on multi numbers") {
+  test("Multi number multiplication on multi numbers") {
     val multiplication = MultiSet(poly(0, 0, 2) , poly(3, 8)) * MultiSet(poly(1, 1), fromInt(2), poly(9))
     val result         = MultiSet(poly(0, 0, 2, 1, 1), poly(0, 0, 2, 0, 0), poly(0, 0, 2, 9), poly(3, 8, 1, 1), poly(3, 8, 0, 0), poly(3, 8, 9))
     assertResult(expected = result)(actual = multiplication)
   }
 
-  test("poly number represented as polynomial") {
+  test("Poly number represented as polynomial") {
     val number = poly(0, 0, 1, 0, 3, 4)
     assertResult("3+1𝛼₀+1𝛼₀³+1𝛼₀⁴")(number.asPolynomial)
   }
 
   /** @see https://youtu.be/CScJqApRPZg?t=474 */
-  test("addition on pure msets") {
+  test("Addition on pure multi sets") {
 
     val addition =
       val a = MultiSet(poly(3), poly(3), poly(12))
@@ -157,7 +157,7 @@ class MultiSetTest extends AnyFunSuite:
   }
 
   /** @see https://youtu.be/CScJqApRPZg?t=598 */
-  test("multiplication on pure msets") {
+  test("Multiplication on pure multi sets") {
     val SixTeen =
       MultiSet(
         Zero, Zero, Zero, Zero,
@@ -187,35 +187,35 @@ class MultiSetTest extends AnyFunSuite:
   }
 
   /** @see https://youtu.be/CScJqApRPZg?t=730 */
-  test("addition of poly variables") {
+  test("Addition of poly variables") {
     assertResult(expected = poly(1, 1))(actual = `𝛼₀` + `𝛼₀`)
     assertResult(expected = poly(1, 1, 1))(actual = `𝛼₀` + `𝛼₀` + `𝛼₀`)
     assertResult(expected = poly(1, 1, 1, 1))(actual = `𝛼₀` + `𝛼₀` + `𝛼₀` + `𝛼₀`)
   }
 
   /** @see https://youtu.be/CScJqApRPZg?t=740 */
-  test("multiplication of poly variables") {
+  test("Multiplication of poly variables") {
     assertResult(expected = poly(1, 1))(actual =   Two * `𝛼₀`)
     assertResult(expected = poly(1, 1, 1))(actual = Three * `𝛼₀`)
     assertResult(expected = poly(1, 1, 1, 1))(actual =  Four * `𝛼₀`)
   }
 
   /** @see https://youtu.be/CScJqApRPZg?t=750 */
-  test("exponentiation of poly variables") {
+  test("Exponentiation of poly variables") {
     assertResult(expected = poly(2))(actual = `𝛼₀` * `𝛼₀`)
     assertResult(expected = poly(3))(actual = `𝛼₀` * `𝛼₀` * `𝛼₀`)
     assertResult(expected = poly(4))(actual = `𝛼₀` * `𝛼₀` * `𝛼₀` * `𝛼₀`)
   }
 
   /** @see https://youtu.be/CScJqApRPZg?t=760 */
-  test("poly variable indexing") {
+  test("Poly variable indexing") {
     assertResult(expected = MultiSet(MultiSet(Zero)))(actual = `𝛼₀`)
     assertResult(expected = MultiSet(MultiSet(One )))(actual = `𝛼₁`)
     assertResult(expected = MultiSet(MultiSet(Two )))(actual = `𝛼₂`)
   }
 
   /** @see https://youtu.be/CScJqApRPZg?t=770 */
-  test("poly variable multiplication") {
+  test("Poly variable multiplication") {
     assertResult(expected = MultiSet(poly(1), poly(1)))(actual = Two * `𝛼₁`)
     assertResult(expected = MultiSet(poly(1), poly(1), poly(1)))(actual = Three * `𝛼₁`)
     assertResult(expected = MultiSet(poly(2), poly(2)))(actual = Two * `𝛼₂`)
