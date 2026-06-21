@@ -1,6 +1,8 @@
 package fpa
 package data
 
+import scala.annotation.tailrec
+
 case class MultiSet(elements: IndexedSeq[MultiSet]):
 
   import MultiSet.*
@@ -99,6 +101,7 @@ object MultiSet:
     MultiSet(IndexedSeq.fill(i)(Zero))
 
   extension (i: Int) def toSubScriptString: String =
+    @tailrec
     def loop(todo: List[Char], acc: String = ""): String =
       todo match
         case '0' :: rest => loop(rest, acc + '\u2080')
@@ -118,6 +121,7 @@ object MultiSet:
     loop(i.toString.toList)
 
   extension (i: Int) def toSuperScriptString: String =
+    @tailrec
     def loop(todo: List[Char], acc: String = ""): String =
       todo match
         case '0' :: rest => loop(rest, acc + '\u2070')
