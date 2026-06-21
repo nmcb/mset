@@ -60,6 +60,8 @@ type Multi = MultiSet // in reality a MultiSet[Poly]
 
 object MultiSet:
 
+  import Script.*
+
   def empty: MultiSet =
     MultiSet(IndexedSeq.empty[MultiSet])
 
@@ -100,42 +102,17 @@ object MultiSet:
     assert(i >= 0, "must be a natural number")
     MultiSet(IndexedSeq.fill(i)(Zero))
 
-  extension (i: Int) def toSubScriptString: String =
+  private def toScript(i: Int, script: Map[Char, Char]): String =
     @tailrec
     def loop(todo: List[Char], acc: String = ""): String =
-      todo match
-        case '0' :: rest => loop(rest, acc + '\u2080')
-        case '1' :: rest => loop(rest, acc + '\u2081')
-        case '2' :: rest => loop(rest, acc + '\u2082')
-        case '3' :: rest => loop(rest, acc + '\u2083')
-        case '4' :: rest => loop(rest, acc + '\u2084')
-        case '5' :: rest => loop(rest, acc + '\u2085')
-        case '6' :: rest => loop(rest, acc + '\u2086')
-        case '7' :: rest => loop(rest, acc + '\u2087')
-        case '8' :: rest => loop(rest, acc + '\u2088')
-        case '9' :: rest => loop(rest, acc + '\u2089')
-        case '-' :: rest => loop(rest, acc + '\u208B')
-        case         Nil => acc
-        case           _ => sys.error("not a decimal")
-
+      if todo.isEmpty then
+        acc
+      else
+        loop(todo.tail, acc + script.getOrElse(todo.head, sys.error("not a digit")))
     loop(i.toString.toList)
+
+  extension (i: Int) def toSubScriptString: String =
+    toScript(i, subscript)
 
   extension (i: Int) def toSuperScriptString: String =
-    @tailrec
-    def loop(todo: List[Char], acc: String = ""): String =
-      todo match
-        case '0' :: rest => loop(rest, acc + '\u2070')
-        case '1' :: rest => loop(rest, acc + '\u00B9')
-        case '2' :: rest => loop(rest, acc + '\u00B2')
-        case '3' :: rest => loop(rest, acc + '\u00B3')
-        case '4' :: rest => loop(rest, acc + '\u2074')
-        case '5' :: rest => loop(rest, acc + '\u2075')
-        case '6' :: rest => loop(rest, acc + '\u2076')
-        case '7' :: rest => loop(rest, acc + '\u2077')
-        case '8' :: rest => loop(rest, acc + '\u2078')
-        case '9' :: rest => loop(rest, acc + '\u2079')
-        case '-' :: rest => loop(rest, acc + '\u208B')
-        case         Nil => acc
-        case           _ => sys.error("not a decimal")
-
-    loop(i.toString.toList)
+    toScript(i, superscript)

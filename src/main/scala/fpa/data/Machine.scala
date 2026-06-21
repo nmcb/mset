@@ -1,3 +1,5 @@
+package fpa.data
+
 object Machine:
 
   @main def run(): Unit =
@@ -40,8 +42,8 @@ object Machine:
 
 
   // util
-  import java.lang.{Long => JavaLong, Double => JavaDouble}
-  import java.math.{BigInteger => JavaBigInteger}
+  import java.lang.{Double as JavaDouble, Long as JavaLong}
+  import java.math.BigInteger as JavaBigInteger
 
   extension (d: Double) def toBinaryString: String =
     JavaLong.toBinaryString(JavaDouble.doubleToRawLongBits(d))
