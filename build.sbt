@@ -2,7 +2,7 @@ lazy val mset =
   project
     .in(file("."))
     .settings( scalaVersion := "3.8.4"
-             , name         := "fpa-mset"
+             , name         := "mset"
              , version      := "0.1.0"
              , libraryDependencies ++= Seq( "org.typelevel"  %% "cats-core"   % "2.13.0"
                                           , "org.typelevel"  %% "cats-effect" % "3.7.0"
