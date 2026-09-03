@@ -1,7 +1,7 @@
 lazy val mset =
   project
     .in(file("."))
-    .settings( scalaVersion := "3.8.4"
+    .settings( scalaVersion := "3.9.0"
              , name         := "mset"
              , version      := "0.1.0"
              , libraryDependencies ++= Seq( "org.typelevel"  %% "cats-core"   % "2.13.0"
