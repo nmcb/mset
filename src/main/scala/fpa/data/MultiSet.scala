@@ -11,7 +11,12 @@ case class MultiSet(elements: IndexedSeq[MultiSet]):
     MultiSet(this.elements ++ that.elements)
 
   def *(that: MultiSet): MultiSet =
-    MultiSet(for { a <- this.elements ; b <- that.elements } yield a + b)
+    MultiSet(
+      for
+        a <- this.elements
+        b <- that.elements
+      yield a + b
+    )
 
   def isZero: Boolean =
     this == Zero
@@ -38,11 +43,10 @@ case class MultiSet(elements: IndexedSeq[MultiSet]):
       elements.groupBy(identity).map(_.toInt -> _.size)
 
     def term(index: Int): Option[String] =
-      products.get(index).map(product =>
+      products.get(index).map: product =>
         val variable = if index != 0 then "𝛼₀" else ""
         val exponent = if index >= 2 then index.toSuperScriptString else ""
         s"$product$variable$exponent"
-      )
 
     List.tabulate(products.keys.max + 1)(term).flatten.mkString("+")
 
